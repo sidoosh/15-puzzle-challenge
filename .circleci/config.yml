@@ -3,22 +3,22 @@ commands:
   restore_cache_cmd:
     steps:
      - restore_cache:
-      keys:
-         - v1-dependencies-{{ checksum "package-lock.json" }}
+      key: v1-dependencies-{{ checksum "package-lock.json" }}
   save_cache_cmd:
     steps:
      - save_cache:
+      key: v1-dependencies-{{ checksum "package-lock.json" }}
       paths:
       - ./node_modules
 	build:
 		steps:
     	- checkout # this pulls pulls code down from GitHub
-			- restore_cmd
+			- restore_cache_cmd
     	- run: echo "A first hello" # This prints "A first hello" to stdout.
 			- run:
 					name: install npm
 					command: npm install
-			- save_cmd
+			- save_cache_cmd
     	- run: sleep 15 # a command telling the job to "sleep" for 25 seconds.
 jobs: # we now have TWO jobs, so that a workflow can coordinate them!
 	one: # This is our first job.
