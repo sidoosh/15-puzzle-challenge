@@ -1,7 +1,7 @@
 version: 2.1
 
 commands:
-  restore_cache_cmd:
+  test_run:
     steps:
       - restore_cache:
         keys:
