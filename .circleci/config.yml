@@ -1,4 +1,5 @@
 version: 2.1
+
 commands:
   restore_cache_cmd:
     steps:
@@ -12,12 +13,13 @@ commands:
         key: dependency-cache-{{ checksum "package-lock.json" }}
         paths:
           - ./node_modules
+
 jobs:
   build:
     machine: true
     steps:
       - checkout
-      - run: restore_cache_cmd
+      - restore_cache_cmd
       - run:
           name: Switching node to latest stable version
           command: |
@@ -30,7 +32,7 @@ jobs:
       - run:
           name: Installing all dependencies
           command: npm install
-      - run: save_cache_cmd
+      - save_cache_cmd
 
 workflows:
   version: 2
