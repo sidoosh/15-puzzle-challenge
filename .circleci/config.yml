@@ -6,6 +6,7 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
+          key: dependency-cache-
       - run:
           name: Switching node to latest stable version
           command: |
