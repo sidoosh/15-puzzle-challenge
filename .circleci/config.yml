@@ -22,9 +22,6 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
-      - run:
-          name: Building project with flavor
-          command: npm run build
 
 workflows:
   version: 2
