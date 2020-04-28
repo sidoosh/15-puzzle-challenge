@@ -1,5 +1,5 @@
- version: 2
- commands:
+version: 2
+commands:
   restore_cache_cmd:
     steps:
      - restore_cache:
@@ -20,7 +20,7 @@
 					command: npm install
 			- save_cmd
     	- run: sleep 15 # a command telling the job to "sleep" for 25 seconds.
- jobs: # we now have TWO jobs, so that a workflow can coordinate them!
+jobs: # we now have TWO jobs, so that a workflow can coordinate them!
 	one: # This is our first job.
     machine: true
     # Steps are a list of commands to run inside the docker container above.
@@ -32,9 +32,9 @@
 				- build
       	- run: echo "A more familiar hi" # We run a similar echo command to above.
  # Under the workflows: map, we can coordinate our two jobs, defined above.
- workflows:
-   version: 2
-   one_and_two: # this is the name of our workflow
-     jobs: # and here we list the jobs we are going to run.
+workflows:
+  version: 2
+    one_and_two: # this is the name of our workflow
+      jobs: # and here we list the jobs we are going to run.
        - one
        - two
