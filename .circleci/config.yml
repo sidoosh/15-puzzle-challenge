@@ -1,49 +1,29 @@
 version: 2.1
 commands:
-  restore_cache_cmd:
-    steps:
-     - restore_cache:
-        key: v1-dependencies-{{ checksum "package-lock.json" }}
-  save_cache_cmd:
-    steps:
-     - save_cache:
-        key: v1-dependencies-{{ checksum "package-lock.json" }}
-        paths:
-          - ./node_modules
-  build:
-    steps:
-      - checkout # this pulls pulls code down from GitHub
-      - restore_cache_cmd
-      - run:
-        name: Switching node to latest stable version
-        command: |
-          export NVM_DIR="/opt/circleci/.nvm"
-          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-          nvm install stable
-          nvm alias default stable
-          node -v
-          npm -v
-      - run: echo "A first hello" # This prints "A first hello" to stdout.
-      - run:
-        name: install npm
-        command: npm install
-      - save_cache_cmd
-      - run: sleep 15 # a command telling the job to "sleep" for 25 seconds.
-jobs: # we now have TWO jobs, so that a workflow can coordinate them!
-  one: # This is our first job.
-    machine: true
-    # Steps are a list of commands to run inside the docker container above.
-    steps:
-    - build
-  two: # This is our second job.
-    machine: true
-    steps:
-      - build
-      - run: echo "A more familiar hi" # We run a similar echo command to above.
- # Under the workflows: map, we can coordinate our two jobs, defined above.
+    restore_cache_cmd:
+        steps:
+            - {restore_cache: {key: 'v1-dependencies-{{ checksum "package-lock.json" }}'}}
+    save_cache_cmd:
+        steps:
+            - {save_cache: {key: 'v1-dependencies-{{ checksum "package-lock.json" }}', paths: [./node_modules]}}
+    build:
+        steps:
+            - checkout
+            - restore_cache_cmd
+            - {run: null, name: 'Switching node to latest stable version', command: "export NVM_DIR=\"/opt/circleci/.nvm\"\n[ -s \"$NVM_DIR/nvm.sh\" ] && \\. \"$NVM_DIR/nvm.sh\"\nnvm install stable\nnvm alias default stable\nnode -v\nnpm -v\n"}
+            - {run: 'echo "A first hello"'}
+            - {run: null, name: 'install npm', command: 'npm install'}
+            - save_cache_cmd
+            - {run: 'sleep 15'}
+jobs:
+    one:
+        machine: true
+        steps:
+            - build
+    two:
+        machine: true
+        steps:
+            - build
+            - {run: 'echo "A more familiar hi"'}
 workflows:
-  version: 2
-  one_and_two:
-    jobs:
-      - one
-      - two
+    version: "2\none_and_two:"
