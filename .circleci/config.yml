@@ -1,20 +1,36 @@
  version: 2
+ commands:
+  restore_cache_cmd:
+    steps:
+     - restore_cache:
+      keys:
+         - v1-dependencies-{{ checksum "package-lock.json" }}
+  save_cache_cmd:
+    steps:
+     - save_cache:
+      paths:
+      - ./node_modules
+	build:
+		steps:
+    	- checkout # this pulls pulls code down from GitHub
+			- restore_cmd
+    	- run: echo "A first hello" # This prints "A first hello" to stdout.
+			- run:
+					name: install npm
+					command: npm install
+			- save_cmd
+    	- run: sleep 15 # a command telling the job to "sleep" for 25 seconds.
  jobs: # we now have TWO jobs, so that a workflow can coordinate them!
-   one: # This is our first job.
-     docker: # it uses the docker executor
-       - image: circleci/ruby:2.4.1 # specifically, a docker image with ruby 2.4.1
-     # Steps are a list of commands to run inside the docker container above.
-     steps:
-       - checkout # this pulls pulls code down from GitHub
-       - run: echo "A first hello" # This prints "A first hello" to stdout.
-       - run: sleep 25 # a command telling the job to "sleep" for 25 seconds.
-   two: # This is our second job.
-     docker: # it runs inside a docker image, the same as above.
-       - image: circleci/ruby:2.4.1
-     steps:
-       - checkout
-       - run: echo "A more familiar hi" # We run a similar echo command to above.
-       - run: sleep 15 # and then sleep for 15 seconds.
+	one: # This is our first job.
+    machine: true
+    # Steps are a list of commands to run inside the docker container above.
+    steps:
+			- build
+  two: # This is our second job.
+		machine: true
+    	steps:
+				- build
+      	- run: echo "A more familiar hi" # We run a similar echo command to above.
  # Under the workflows: map, we can coordinate our two jobs, defined above.
  workflows:
    version: 2
