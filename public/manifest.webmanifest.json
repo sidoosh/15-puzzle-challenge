@@ -1,0 +1,7 @@
+{
+    "short_name": "Survey web app",
+    "description": "Asks information from users",
+    "start_url": "/index.html",
+    "scope": "index.html",
+    "display": "standalone"
+  }
