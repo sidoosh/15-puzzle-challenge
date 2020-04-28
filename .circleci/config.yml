@@ -17,7 +17,7 @@ jobs:
     machine: true
     steps:
       - checkout
-      - restore_cache_cmd
+      - run: restore_cache_cmd
       - run:
           name: Switching node to latest stable version
           command: |
@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Installing all dependencies
           command: npm install
-      - save_cache_cmd
+      - run: save_cache_cmd
 
 workflows:
   version: 2
