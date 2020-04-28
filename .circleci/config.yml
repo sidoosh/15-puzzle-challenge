@@ -2,7 +2,7 @@ version: 2
 commands:
   test_run:
     steps:
-       - run: echo "testing123"
+      - run: echo "testing123"
 jobs:
   build:
     machine: true
