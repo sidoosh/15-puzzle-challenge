@@ -1,5 +1,5 @@
 version: 2.1
-command:
+commands:
   restore_cache_cmd:
     steps:
       - restore_cache:
