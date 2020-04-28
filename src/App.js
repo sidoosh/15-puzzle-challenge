@@ -2,9 +2,6 @@ import React from 'react';
 import './App.css';
 import './components/Board'
 import Board from './components/Board';
-import forEach from 'lodash/forEach';
-
-forEach(['Aina', 'maonasd', 'dika'], (val) => console.log(val));
 
 function App() {
   return (
