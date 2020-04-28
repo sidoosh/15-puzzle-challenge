@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 commands:
   restore_cache_cmd:
     steps:
@@ -14,6 +14,15 @@ commands:
 		steps:
     	- checkout # this pulls pulls code down from GitHub
 			- restore_cache_cmd
+      - run: &switch_node_version
+        name: Switching node to latest stable version
+        command: |
+          export NVM_DIR="/opt/circleci/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install stable
+          nvm alias default stable
+          node -v
+          npm -v
     	- run: echo "A first hello" # This prints "A first hello" to stdout.
 			- run:
 					name: install npm
