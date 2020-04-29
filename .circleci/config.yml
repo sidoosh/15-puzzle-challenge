@@ -1,5 +1,4 @@
 version: 2.1
-
 commands:
   test_run:
     steps:
@@ -13,7 +12,6 @@ commands:
         paths:
           - ./node_modules
         key: dependency-cache-{{ checksum "package-lock.json" }}
-
 jobs:
   build:
     machine: true
