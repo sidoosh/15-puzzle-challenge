@@ -6,12 +6,18 @@ commands:
           keys:
             - dependency-cache-{{ checksum "package-lock.json" }}
             - dependency-cache-
+
+  save_run:
+    steps:
+      - run: echo "I am ok"
+
 jobs:
   build:
     machine: true
     steps:
       - checkout
       - test_run
+      - save_run
       - run:
           name: Switching node to latest stable version
           command: |
