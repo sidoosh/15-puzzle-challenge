@@ -7,9 +7,12 @@ commands:
             - dependency-cache-{{ checksum "package-lock.json" }}
             - dependency-cache-
 
-  save_run:
+  save_cache_cmd:
     steps:
-      - run: echo "I am ok"
+      - save_cache:
+        paths:
+          - ./node_modules
+        key: dependency-cache-{{ checksum "package-lock.json" }}
 
 jobs:
   build:
@@ -17,7 +20,6 @@ jobs:
     steps:
       - checkout
       - test_run
-      - save_run
       - run:
           name: Switching node to latest stable version
           command: |
@@ -30,6 +32,7 @@ jobs:
       - run:
           name: Installing all dependencies
           command: npm install
+      - save_cache_cmd
 
 workflows:
   version: 2
