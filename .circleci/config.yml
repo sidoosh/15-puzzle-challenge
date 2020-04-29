@@ -1,18 +1,17 @@
 version: 2.1
 commands:
-  test_run:
-    steps:
-      - restore_cache:
-          keys:
-            - dependency-cache-{{ checksum "package-lock.json" }}
-            - dependency-cache-
-
   save_cache_cmd:
     steps:
       - save_cache:
         key: dependency-cache-{{ checksum "package-lock.json" }}
         paths:
           - ./node_modules
+  test_run:
+    steps:
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "package-lock.json" }}
+            - dependency-cache-
 
 jobs:
   build:
