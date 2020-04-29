@@ -6,12 +6,6 @@ commands:
           keys:
             - dependency-cache-{{ checksum "package-lock.json" }}
             - dependency-cache-
-  save_cache_cmd:
-    steps:
-      - save_cache:
-        paths:
-          - ./node_modules
-        key: dependency-cache-{{ checksum "package-lock.json" }}
 jobs:
   build:
     machine: true
@@ -30,7 +24,6 @@ jobs:
       - run:
           name: Installing all dependencies
           command: npm install
-      - save_cache_cmd
 
 workflows:
   version: 2
