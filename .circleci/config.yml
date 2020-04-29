@@ -3,23 +3,6 @@ version: 2.1
 commands:
   test_run:
     steps:
-      - restore_cache:
-        keys:
-          - dependency-cache-{{ checksum "package-lock.json" }}
-          - dependency-cache-
-  save_cache_cmd:
-    steps:
-      - save_cache:
-        key: dependency-cache-{{ checksum "package-lock.json" }}
-        paths:
-          - ./node_modules
-
-jobs:
-  build:
-    machine: true
-    steps:
-      - checkout
-      - restore_cache_cmd
       - run:
           name: Switching node to latest stable version
           command: |
@@ -29,10 +12,24 @@ jobs:
             nvm alias default stable
             node -v
             npm -v
+
+jobs:
+  build:
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+        keys:
+          - dependency-cache-{{ checksum "package-lock.json" }}
+          - dependency-cache-
+      - test_run
       - run:
           name: Installing all dependencies
           command: npm install
-      - save_cache_cmd
+      - save_cache:
+        key: dependency-cache-{{ checksum "package-lock.json" }}
+        paths:
+          - ./node_modules
 
 workflows:
   version: 2
