@@ -17,9 +17,9 @@ jobs:
       - run:
           name: yarn install
           command: |
-            export YARN_PATH="/opt/circleci/.yarn"
-            [ -s "$YARN_PATH/install.sh" ] && \. "$YARN_PATH/install.sh"
             sudo curl -o- -L https://yarnpkg.com/install.sh | bash
+            export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+      - run: yarn --version
       - run:
           name: Installing all dependencies
           command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
