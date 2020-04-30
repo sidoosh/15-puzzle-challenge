@@ -1,16 +1,10 @@
 version: 2.1
 commands:
-  save_cache_cmd:
-    steps:
-      - save_cache:
-        key: dependency-cache-{{ checksum "package-lock.json" }}
-        paths:
-          - ./node_modules
   test_run:
     steps:
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "package-lock.json" }}
+            - dependency-cache-{{ checksum "yarn.lock" }}
             - dependency-cache-
 
 jobs:
@@ -18,20 +12,20 @@ jobs:
     machine: true
     steps:
       - checkout
-      - test_run
       - run:
           name: Switching node to latest stable version
           command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install stable
-            nvm alias default stable
-            node -v
-            npm -v
+            curl -o- -L https://yarnpkg.com/install.sh | bash
       - run:
           name: Installing all dependencies
-          command: npm install
-      - save_cache_cmd
+          command: yarn install --frozen-lockfile
+      - test_run
+      - save_cache:
+        key: dependency-cache-{{ checksum "yarn.lock" }}
+        paths:
+          - ~/.cache/yarn
+          - ./node_modules
+      - run: yarn build
 
 workflows:
   version: 2
