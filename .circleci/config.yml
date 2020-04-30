@@ -8,9 +8,18 @@ jobs:
       - run: &switch_node_version
           name: Switching node to latest stable version
           command: |
-            sudo brew install node
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install stable
+            nvm alias default stable
             node -v
             npm -v
+      - run:
+          name: yarn install
+          command: |
+            export YARN_PATH="/opt/circleci/.yarn"
+            [ -s "$YARN_PATH/install.sh" ] && \. "$YARN_PATH/install.sh"
+            sudo curl -o- -L https://yarnpkg.com/install.sh | bash
       - run:
           name: Installing all dependencies
           command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
