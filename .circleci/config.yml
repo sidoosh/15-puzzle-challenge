@@ -15,11 +15,6 @@ jobs:
             node -v
             npm -v
       - run:
-          name: install yarn
-          command: |
-            curl -o- -L https://yarnpkg.com/install.sh | bash
-            yarn --version
-      - run:
           name: Installing all dependencies
           command: yarn install --frozen-lockfile
       - restore_cache:
