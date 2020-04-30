@@ -2,12 +2,24 @@ version: 2
 
 jobs:
   build:
-    docker:
-      - image: circleci/node
-      - image: google/cloud-sdk
+    machine: true
     steps:
       - checkout
-      - run: gcloud projects list
+      - run: &switch_node_version
+          name: Switching node to latest stable version
+          command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install stable
+            nvm alias default stable
+            node -v
+            npm -v
+      - run:
+          name: Install yarn
+          command: |
+            cd /opt
+            wget https://yarnpkg.com/latest.tar.gz
+            tar zvxf latest.tar.gz
       - run: yarn --version
       - run: echo "You are funny"
       - run: node -v
