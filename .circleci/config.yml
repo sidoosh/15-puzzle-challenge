@@ -21,7 +21,8 @@ jobs:
             sudo wget https://yarnpkg.com/latest.tar.gz
             sudo tar zvxf latest.tar.gz
             export PATH="$PATH:/opt/yarn-v1.22.4/bin/"
-      - run: yarn --version
+            echo $PATH
+      - run: yarn install
       - run: echo "You are funny"
       - run: node -v
       - run:
