@@ -18,10 +18,9 @@ jobs:
           name: yarn install
           command: |
             sudo curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run: sudo yarn --version
       - run:
           name: Installing all dependencies
-          command: sudo apt-get update && sudo apt-get install yarn && yarn -v
+          command: sudo apt-get install yarn && yarn -v
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
