@@ -10,8 +10,8 @@ jobs:
           command: |
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install stable
-            nvm alias default stable
+            nvm install --lts
+            nvm use --lts
             node -v
             npm -v
       - run:
