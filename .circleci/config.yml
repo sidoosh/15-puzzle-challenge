@@ -21,7 +21,7 @@ jobs:
       - run: sudo yarn --version
       - run:
           name: Installing all dependencies
-          command: sudo yarn install --frozen-lockfile
+          command: sudo apt-get update && sudo apt-get install yarn && yarn -v
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
