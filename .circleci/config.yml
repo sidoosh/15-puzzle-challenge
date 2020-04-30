@@ -18,8 +18,8 @@ jobs:
           name: Install yarn
           command: |
             cd /opt
-            wget https://yarnpkg.com/latest.tar.gz
-            tar zvxf latest.tar.gz
+            sudo wget https://yarnpkg.com/latest.tar.gz
+            sudo tar zvxf latest.tar.gz
       - run: yarn --version
       - run: echo "You are funny"
       - run: node -v
