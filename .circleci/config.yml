@@ -9,7 +9,7 @@ jobs:
       - run: yarn --version
       - run:
           name: Installing all dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
+          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
