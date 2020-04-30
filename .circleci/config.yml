@@ -18,7 +18,6 @@ jobs:
           name: yarn install
           command: |
             curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run: yarn --version
       - run:
           name: Installing all dependencies
           command: yarn install --frozen-lockfile
