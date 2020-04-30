@@ -2,29 +2,14 @@ version: 2
 
 jobs:
   build:
-    machine: true
+    docker:
+      - image: circleci/node:10.10
     steps:
       - checkout
-      - run: &switch_node_version
-          name: Switching node to latest stable version
-          command: |
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install stable
-            nvm alias default stable
-            node -v
-            npm -v
-      - run:
-          name: yarn install
-          command: |
-            export PATH="$PATH:/opt/circleci/yarn-1.22.4/bin"
-            sudo curl -o- -L https://yarnpkg.com/install.sh | bash
-            export PATH="$PATH:`yarn global bin`"
-            echo $PATH
       - run: yarn --version
       - run:
           name: Installing all dependencies
-          command: yarn --frozen-lockfile --cache-folder ~/.cache/yarn
+          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
