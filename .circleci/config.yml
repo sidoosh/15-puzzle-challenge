@@ -17,8 +17,8 @@ jobs:
       - run:
           name: yarn install
           command: |
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-            brew install yarn
+            sudo port install yarn
+      - run: yarn --version
       - run:
           name: Installing all dependencies
           command: yarn install --frozen-lockfile
