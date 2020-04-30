@@ -19,7 +19,7 @@ jobs:
           command: |
             sudo curl -o- -L https://yarnpkg.com/install.sh | bash
             export PATH="$PATH:/opt/circleci/.yarn/bin"
-            echo $YARN_PATH
+            echo $PATH
       - run: yarn --version
       - run:
           name: Installing all dependencies
