@@ -13,14 +13,14 @@ jobs:
           name: Installing all dependencies
           command: yarn install --frozen-lockfile
       - restore_cache:
-        keys:
-          - dependency-cache-{{ checksum "yarn.lock" }}
-          - dependency-cache-
+          keys:
+            - dependency-cache-{{ checksum "yarn.lock" }}
+            - dependency-cache-
       - save_cache:
-        key: dependency-cache-{{ checksum "yarn.lock" }}
-        paths:
-          - ~/.cache/yarn
-          - ./node_modules
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+            - ./node_modules
       - run: yarn build
 
 workflows:
