@@ -17,11 +17,11 @@ jobs:
       - run:
           name: yarn install
           command: |
-            npm install yarn
-      - run: yarn --version
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+      - run: sudo yarn --version
       - run:
           name: Installing all dependencies
-          command: yarn install --frozen-lockfile
+          command: sudo yarn install --frozen-lockfile
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
