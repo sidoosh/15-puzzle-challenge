@@ -1,11 +1,4 @@
-version: 2.1
-commands:
-  test_run:
-    steps:
-      - restore_cache:
-          keys:
-            - dependency-cache-{{ checksum "yarn.lock" }}
-            - dependency-cache-
+version: 2
 
 jobs:
   build:
@@ -19,7 +12,10 @@ jobs:
       - run:
           name: Installing all dependencies
           command: yarn install --frozen-lockfile
-      - test_run
+      - restore_cache:
+        keys:
+          - dependency-cache-{{ checksum "yarn.lock" }}
+          - dependency-cache-
       - save_cache:
         key: dependency-cache-{{ checksum "yarn.lock" }}
         paths:
