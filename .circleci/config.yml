@@ -5,10 +5,20 @@ jobs:
     machine: true
     steps:
       - checkout
-      - run:
+      - run: &switch_node_version
           name: Switching node to latest stable version
           command: |
+            export NVM_DIR="/opt/circleci/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            nvm install stable
+            nvm alias default stable
+            node -v
+            npm -v
+      - run:
+          name: install yarn
+          command: |
             curl -o- -L https://yarnpkg.com/install.sh | bash
+            yarn --version
       - run:
           name: Installing all dependencies
           command: yarn install --frozen-lockfile
