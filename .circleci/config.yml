@@ -17,8 +17,9 @@ jobs:
       - run:
           name: Install yarn
           command: |
+            cd /opt/circleci
             curl -o- -L https://yarnpkg.com/install.sh | bash
-            export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+            export PATH="/opt/circleci/.yarn/bin:/opt/circleci/.config/yarn/global/node_modules/.bin:$PATH"
             echo $PATH
       - run: yarn install
       - run: echo "You are funny"
