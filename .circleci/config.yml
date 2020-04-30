@@ -8,7 +8,7 @@ jobs:
       - run: &switch_node_version
           name: Switching node to latest stable version
           command: |
-            brew install node
+            sudo brew install node
             node -v
             npm -v
       - run:
