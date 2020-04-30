@@ -4,9 +4,10 @@ jobs:
   build:
     docker:
       - image: circleci/node
-    machine: true
+      - image: google/cloud-sdk
     steps:
       - checkout
+      - run: gcloud projects list
       - run: yarn --version
       - run: echo "You are funny"
       - run: node -v
