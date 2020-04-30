@@ -17,7 +17,7 @@ jobs:
       - run:
           name: yarn install
           command: |
-            sudo port install yarn
+            npm install yarn
       - run: yarn --version
       - run:
           name: Installing all dependencies
