@@ -10,9 +10,15 @@ jobs:
           command: |
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install 8.9.4 && nvm alias default 8.9.4
+            nvm install stable
+            nvm alias default stable
             node -v
             npm -v
+      - run:
+          name: yarn install
+          command: |
+            sudo curl -o- -L https://yarnpkg.com/install.sh | bash
+      - run: sudo yarn --version
       - run:
           name: Installing all dependencies
           command: sudo apt-get update && sudo apt-get install yarn && yarn -v
@@ -25,7 +31,7 @@ jobs:
           paths:
             - ~/.cache/yarn
             - ./node_modules
-      - run: yarn start
+      - run: yarn build
 
 workflows:
   version: 2
