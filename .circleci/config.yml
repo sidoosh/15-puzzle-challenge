@@ -15,11 +15,6 @@ jobs:
             node -v
             npm -v
       - run:
-          name: yarn install
-          command: |
-            curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run: sudo yarn --version
-      - run:
           name: Installing all dependencies
           command: sudo apt-get update && sudo apt-get install yarn && yarn -v
       - restore_cache:
