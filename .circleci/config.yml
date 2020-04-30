@@ -18,6 +18,7 @@ jobs:
           name: yarn install
           command: |
             sudo curl -o- -L https://yarnpkg.com/install.sh | bash
+            export PATH="/opt/circleci/.yarn/bin:/opt/circleci/.config/yarn/global/node_modules/.bin:$PATH"
             export PATH="$PATH:`yarn global bin`"
             echo $PATH
       - run: yarn --version
