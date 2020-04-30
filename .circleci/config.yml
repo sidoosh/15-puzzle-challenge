@@ -10,8 +10,7 @@ jobs:
           command: |
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install stable
-            nvm alias default stable
+            nvm install 8.9.4 && nvm alias default 8.9.4
             node -v
             npm -v
       - run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
