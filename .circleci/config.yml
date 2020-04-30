@@ -24,12 +24,9 @@ jobs:
           command: |
             export NVM_DIR="/opt/circleci/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            yarn install
+            yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - run: echo "You are funny"
       - run: node -v
-      - run:
-          name: Installing all dependencies
-          command: yarn install --frozen-lockfile --cache-folder ~/.cache/yarn
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "yarn.lock" }}
